@@ -8,6 +8,7 @@ import { X, Calendar, Shield, LogOut, Edit2, Check, Heart } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Input } from './ui/input';
 import { useAuth } from './AuthContext';
 import { useTheme } from './ThemeContext';
 import { useNavigation } from '@/hooks/useNavigation';
@@ -174,7 +175,28 @@ export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticle
             </Avatar>
 
             {/* User Info */}
-            
+            {isEditing ? (
+              <div className="text-center mb-4 px-6 space-y-3">
+                <div>
+                  <label className="text-xs text-white/70 block mb-1">Nom</label>
+                  <Input
+                    value={editedName}
+                    onChange={(e) => setEditedName(e.target.value)}
+                    className="text-center bg-white/10 border-white/20 text-white placeholder-white/50"
+                    placeholder="Votre nom"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-white/70 block mb-1">URL de l'image</label>
+                  <Input
+                    value={editedImage}
+                    onChange={(e) => setEditedImage(e.target.value)}
+                    className="text-center bg-white/10 border-white/20 text-white placeholder-white/50"
+                    placeholder="URL de votre avatar"
+                  />
+                </div>
+              </div>
+            ) : (
               <div className="text-center mb-2">
                 <h2 className="text-2xl font-bold text-white mb-1">
                   {user.name}
@@ -197,6 +219,7 @@ export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticle
                   </div>
                 )}
               </div>
+            )}
           </div>
 
           <CardContent className="p-6 space-y-4">
@@ -285,23 +308,6 @@ export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticle
               </div>
             )}
 
-            
-            {/* Mes articles favoris Button */}
-            {onViewLikedArticles && (
-              <Button
-                onClick={() => {
-                  onViewLikedArticles();
-                  onClose();
-                }}
-                className="w-full text-white font-semibold"
-                style={{ 
-                  background: 'linear-gradient(135deg, #FF9A3C 0%, #FF7A1C 100%)'
-                }}
-              >
-                <Heart className="h-4 w-4 mr-2" />
-                Mes articles favoris
-              </Button>
-            )}
             {/* Admin Button */}
             {isStaff && onAdminAccess && (
               <Button
