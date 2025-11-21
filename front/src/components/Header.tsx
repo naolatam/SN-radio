@@ -22,7 +22,7 @@ export default function Header() {
   const [showUserProfile, setShowUserProfile] = useState(false);
   const { user, isAuthenticated } = useAuth();
   const { themeColors } = useTheme();
-  const { goHome, goToNews, goToAuth, scrollToSection } = useNavigation();
+  const { goHome, goToNews, goToAuth, goToLiked, scrollToSection } = useNavigation();
   const location = useLocation();
   const isStaff = user?.role === UserRole.ADMIN || user?.role === UserRole.STAFF;
   
@@ -196,7 +196,7 @@ export default function Header() {
         <UserProfile 
           onClose={() => setShowUserProfile(false)}
           onAdminAccess={() => setShowUserProfile(false)}
-          onViewLikedArticles={() => setShowUserProfile(false)}
+          onViewLikedArticles={goToLiked}
         />,
         document.body
       )}

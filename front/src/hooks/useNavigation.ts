@@ -17,6 +17,9 @@ export function useNavigation() {
     goToNews: () => navigate(ROUTES.NEWS),
     goToArticle: (articleId: string) => navigate(buildArticleRoute(articleId)),
     
+    // Liked articles navigation
+    goToLiked: () => navigate(ROUTES.LIKED),
+    
     // Auth navigation
     goToAuth: () => navigate(ROUTES.AUTH),
     

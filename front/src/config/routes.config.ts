@@ -7,6 +7,7 @@ export const ROUTES = {
   HOME: '/',
   NEWS: '/news',
   NEWS_ARTICLE: '/news/:articleId',
+  LIKED: '/liked',
   AUTH: '/auth',
   AUTH_CALLBACK: '/auth/callback',
   ADMIN: '/admin',

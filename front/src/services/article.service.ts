@@ -78,6 +78,19 @@ class ArticleService {
     
     return [];
   }
+
+  /**
+   * Get liked articles by current user
+   */
+  async getLikedArticles(): Promise<Article[]> {
+    const response = await httpClient.get<Article[]>(`${this.basePath}/liked`);
+    
+    if (response.success && response.data) {
+      return Array.isArray(response.data) ? response.data : [];
+    }
+    
+    return [];
+  }
 }
 
 export const articleService = new ArticleService();
