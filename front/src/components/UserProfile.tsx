@@ -4,11 +4,10 @@
  */
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { X, Calendar, Shield, LogOut, Edit2, Check, Heart, Headphones } from 'lucide-react';
+import { X, Calendar, Shield, LogOut, Edit2, Check, Heart } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { Input } from './ui/input';
 import { useAuth } from './AuthContext';
 import { useTheme } from './ThemeContext';
 import { useNavigation } from '@/hooks/useNavigation';
@@ -18,9 +17,12 @@ import { userService } from '@/services/user.service';
 
 interface UserProfileProps {
   onClose: () => void;
+  onAdminAccess?: () => void;
+  onViewLikedArticles?: () => void;
+
 }
 
-export default function UserProfile({ onClose }: UserProfileProps) {
+export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticles }: UserProfileProps) {
   const { user, logout, refreshProfile } = useAuth();
   const { themeColors } = useTheme();
   const { goToAdmin } = useNavigation();
@@ -63,7 +65,7 @@ export default function UserProfile({ onClose }: UserProfileProps) {
     try {
       const response = await userService.updateProfile({
         name: editedName,
-        image: editedImage || null,
+        image: editedImage || undefined,
       });
 
       if (response.success) {

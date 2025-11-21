@@ -40,6 +40,10 @@ export default function Header() {
       scrollToSection('equipe');
     }
   };
+
+  const handleProfileClick = () => {
+    setShowUserProfile(true);
+  };
   
   const navItems = [
     { name: 'Accueil', action: goHome },
@@ -87,11 +91,11 @@ export default function Header() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setShowUserProfile(true)}
+                  onClick={handleProfileClick}
                   className="text-gray-300 hover:text-white flex items-center space-x-2 border border-transparent hover:border-gray-600"
                 >
                   <Avatar className="h-7 w-7">
-                    <AvatarImage src={user.image || undefined} alt={user.name || 'User Avatar'} />
+                    <AvatarImage src={user.image} alt={user.name || 'User Avatar'} />
                     <AvatarFallback 
                       className="text-xs font-medium"
                       style={{ background: themeColors.button.primary }}
@@ -151,7 +155,7 @@ export default function Header() {
             {isAuthenticated && user ? (
               <button
                 onClick={() => {
-                  setShowUserProfile(true);
+                  handleProfileClick();
                   setIsMenuOpen(false);
                 }}
                 className="flex items-center py-2 text-gray-300 hover:text-white transition-colors duration-200 w-full text-left"
@@ -188,9 +192,11 @@ export default function Header() {
       </div>
 
       {/* User Profile Modal - Rendered via Portal */}
-      {showUserProfile && createPortal(
+      {showUserProfile && typeof document !== 'undefined' && createPortal(
         <UserProfile 
           onClose={() => setShowUserProfile(false)}
+          onAdminAccess={() => setShowUserProfile(false)}
+          onViewLikedArticles={() => setShowUserProfile(false)}
         />,
         document.body
       )}

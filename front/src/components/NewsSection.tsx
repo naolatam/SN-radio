@@ -66,7 +66,6 @@ export default function NewsSection({ onNewsClick, onArticleClick, onLoginRequir
               <div className="relative">
                 <ImageWithFallback
                   src={article.pictureUrl || defaultLogo}
-                  fetchPriority='low'
                   alt={article.title || 'Article'}
                   className="w-full h-48 object-cover"
                 />
