@@ -1,0 +1,184 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String        @id @default(cuid())
+  email         String        @unique @db.VarChar(255)
+  emailVerified Boolean       @default(false)
+  role          UserRole      @default(MEMBER)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  description   String?       @db.Text
+  lastLogin     DateTime?
+  image         String?       @db.VarChar(500)
+  name          String        @db.VarChar(50)
+  accounts      Account[]
+  likedArticles ArticleLike[]
+  articles      Article[]
+  sessions      Session[]
+
+  @@index([email])
+  @@index([name])
+  @@index([role])
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique @db.VarChar(500)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?  @db.VarChar(45)
+  userAgent String?  @db.Text
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String    @db.VarChar(255)
+  providerId            String    @db.VarChar(50)
+  userId                String
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  idToken               String?   @db.Text
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?   @db.Text
+  password              String?   @db.VarChar(255)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String   @db.VarChar(255)
+  value      String   @db.VarChar(255)
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, value])
+  @@map("verifications")
+}
+
+model Category {
+  id       String            @id @default(cuid())
+  name     String            @unique @db.VarChar(100)
+  slug     String            @unique @db.VarChar(100)
+  color    String            @db.VarChar(10) @default("#000000")
+
+  articles ArticleCategory[]
+
+  @@index([slug])
+  @@map("categories")
+}
+
+model Article {
+  id          String            @id @default(cuid())
+  title       String            @db.VarChar(255)
+  resume      String            @db.Text
+  content     String            @db.LongText
+  contentHtml String?           @db.LongText
+  pictureUrl  String?           @db.VarChar(500)
+  isHeadline  Boolean           @default(false)
+  publishedAt DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  authorId    String
+  categories  ArticleCategory[]
+  likes       ArticleLike[]
+  author      User              @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@index([publishedAt])
+  @@index([isHeadline])
+  @@map("articles")
+}
+
+model ArticleCategory {
+  id         String   @id @default(cuid())
+  articleId  String
+  categoryId String
+  article    Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, categoryId])
+  @@index([articleId])
+  @@index([categoryId])
+  @@map("article_categories")
+}
+
+model ArticleLike {
+  id        String   @id @default(cuid())
+  articleId String
+  userId    String
+  createdAt DateTime @default(now())
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, userId])
+  @@index([userId])
+  @@index([articleId])
+  @@map("article_likes")
+}
+
+model SiteConfig {
+  id          String        @id @default(cuid())
+  key         String        @unique @db.VarChar(100)
+  name        String        @db.VarChar(255)
+  description String?       @db.Text
+  isActive    Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  values      ConfigValue[]
+
+  @@index([key])
+  @@map("site_configs")
+}
+
+model ConfigValue {
+  id           String     @id @default(cuid())
+  configId     String
+  key          String     @db.VarChar(100)
+  value        String     @db.Text
+  valueType    ConfigType @default(TEXT)
+  displayOrder Int        @default(0)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  config       SiteConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@unique([configId, key])
+  @@index([configId])
+  @@map("config_values")
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
+  MEMBER
+}
+
+enum ConfigType {
+  TEXT
+  URL
+  EMAIL
+  PHONE
+  HTML
+  JSON
+}

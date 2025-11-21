@@ -1,0 +1,446 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #12171C;
+  --foreground: #ffffff;
+  --card: #12171C;
+  --card-foreground: #ffffff;
+  --popover: #12171C;
+  --popover-foreground: #ffffff;
+  --primary: #007EFF;
+  --primary-foreground: #ffffff;
+  --secondary: #FFBB62;
+  --secondary-foreground: #12171C;
+  --muted: #1a2025;
+  --muted-foreground: #a0a3a7;
+  --accent: #CE8E20;
+  --accent-foreground: #ffffff;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: transparent;
+  --input-background: #1a2025;
+  --switch-background: #2a3138;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #007EFF;
+  --chart-1: #007EFF;
+  --chart-2: #FFBB62;
+  --chart-3: #CE8E20;
+  --chart-4: #5ba3ff;
+  --chart-5: #ffc977;
+  --radius: 0.625rem;
+  --sidebar: #12171C;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #007EFF;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a2025;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #007EFF;
+  
+  /* SN-Radio custom colors */
+  --sn-dark: #12171C;
+  --sn-blue: #007EFF;
+  --sn-orange: #FFBB62;
+  --sn-orange-dark: #CE8E20;
+  
+  /* Halloween theme colors */
+  --halloween-primary: #FF6600;
+  --halloween-secondary: #F0E68C;
+  --halloween-accent: #D84315;
+  --halloween-background: #1A0E0E;
+  --halloween-surface: #2E1A1A;
+}
+
+.dark {
+  --background: #12171C;
+  --foreground: #ffffff;
+  --card: #12171C;
+  --card-foreground: #ffffff;
+  --popover: #12171C;
+  --popover-foreground: #ffffff;
+  --primary: #007EFF;
+  --primary-foreground: #ffffff;
+  --secondary: #FFBB62;
+  --secondary-foreground: #12171C;
+  --muted: #1a2025;
+  --muted-foreground: #a0a3a7;
+  --accent: #CE8E20;
+  --accent-foreground: #ffffff;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.05);
+  --ring: #007EFF;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: #007EFF;
+  --chart-2: #FFBB62;
+  --chart-3: #CE8E20;
+  --chart-4: #5ba3ff;
+  --chart-5: #ffc977;
+  --sidebar: #12171C;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #007EFF;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a2025;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #007EFF;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* SN-Radio custom colors */
+  --color-sn-dark: var(--sn-dark);
+  --color-sn-blue: var(--sn-blue);
+  --color-sn-orange: var(--sn-orange);
+  --color-sn-orange-dark: var(--sn-orange-dark);
+  
+  /* Halloween theme colors */
+  --color-halloween-primary: var(--halloween-primary);
+  --color-halloween-secondary: var(--halloween-secondary);
+  --color-halloween-accent: var(--halloween-accent);
+  --color-halloween-background: var(--halloween-background);
+  --color-halloween-surface: var(--halloween-surface);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* Améliorer la scrollbar sur mobile */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Classes personnalisées pour le FloatingPlayer */
+.w-15 {
+  width: 3.75rem; /* 60px */
+}
+
+.h-15 {
+  height: 3.75rem; /* 60px */
+}
+
+.w-70 {
+  width: 17.5rem; /* 280px */
+}
+
+/* Améliorer le responsive pour mobile */
+@media (max-width: 640px) {
+  .floating-player-mobile {
+    touch-action: pan-x pan-y;
+  }
+}
+
+/* Centrage parfait pour les modals */
+.modal-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh; /* Support pour les navigateurs mobiles */
+}
+
+/* Animation douce pour les modals */
+.modal-backdrop {
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Style pour les boutons admin premium */
+.admin-button {
+  background: linear-gradient(135deg, #FFBB62, #CE8E20);
+  box-shadow: 0 4px 15px 0 rgba(255, 187, 98, 0.3);
+  transition: all 0.2s ease;
+}
+
+.admin-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(255, 187, 98, 0.4);
+}
+
+/* Styles spécifiques pour le thème Halloween */
+.theme-halloween .admin-button {
+  background: linear-gradient(135deg, #F0E68C, #D84315);
+  box-shadow: 0 4px 15px 0 rgba(240, 230, 140, 0.3);
+}
+
+.theme-halloween .admin-button:hover {
+  box-shadow: 0 6px 20px 0 rgba(240, 230, 140, 0.4);
+}
+
+/* Effets spéciaux Halloween */
+.theme-halloween {
+  /* Subtle pumpkin glow animation */
+}
+
+.theme-halloween .halloween-glow {
+  animation: halloweenGlow 3s ease-in-out infinite;
+}
+
+@keyframes halloweenGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.6), 0 0 30px rgba(240, 230, 140, 0.3);
+  }
+}
+
+/* Prose styling for markdown content */
+.prose {
+  color: #d1d5db;
+  max-width: 65ch;
+}
+
+.prose-invert {
+  color: #d1d5db;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  color: #ffffff;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+  line-height: 1.3;
+}
+
+.prose h1 { font-size: 2.25em; }
+.prose h2 { font-size: 1.875em; }
+.prose h3 { font-size: 1.5em; }
+.prose h4 { font-size: 1.25em; }
+.prose h5 { font-size: 1.125em; }
+.prose h6 { font-size: 1em; }
+
+.prose p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  line-height: 1.75;
+}
+
+.prose a {
+  color: #007EFF;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.prose a:hover {
+  color: #5ba3ff;
+}
+
+.prose strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+.prose code {
+  color: #FFBB62;
+  background-color: rgba(255, 187, 98, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.prose pre {
+  background-color: #1a2025;
+  color: #d1d5db;
+  overflow-x: auto;
+  padding: 1em;
+  border-radius: 0.5rem;
+  margin: 1.5em 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: 0.875em;
+}
+
+.prose ul, .prose ol {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1.625em;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose ul > li {
+  list-style-type: disc;
+}
+
+.prose ol > li {
+  list-style-type: decimal;
+}
+
+.prose blockquote {
+  font-style: italic;
+  border-left: 4px solid #007EFF;
+  padding-left: 1em;
+  margin: 1.5em 0;
+  color: #9ca3af;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 2em 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+}
+
+.prose th, .prose td {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75em;
+  text-align: left;
+}
+
+.prose th {
+  background-color: #1a2025;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.prose tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
