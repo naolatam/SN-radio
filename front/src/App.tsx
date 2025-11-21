@@ -19,6 +19,7 @@ import MainLayout from './layouts/MainLayout';
 import MinimalLayout from './layouts/MinimalLayout';
 import HomePage from './pages/HomePage';
 import NewsListPage from './pages/NewsListPage';
+import ArticlePage from './pages/ArticlePage';
 import AuthPage from './pages/AuthPage';
 import AdminPanelPage from './pages/AdminPanelPage';
 import LegalPage from './pages/LegalPage';
@@ -33,7 +34,7 @@ function AppRoutes() {
       <Route element={<MainLayout />}>
         <Route path={ROUTES.HOME} element={<HomePage />} />
         <Route path={ROUTES.NEWS} element={<NewsListPage />} />
-        <Route path={ROUTES.NEWS_ARTICLE} element={<NewsListPage />} />
+        <Route path={ROUTES.NEWS_ARTICLE} element={<ArticlePage />} />
         <Route path="/legal/:type" element={<LegalPage />} />
       </Route>
 
