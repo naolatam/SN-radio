@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { Theme, CreateThemeDTO, UpdateThemeDTO } from '../types/shared.types';
 
 const prisma = new PrismaClient();
@@ -10,7 +10,7 @@ export class ThemeRepository {
   async findAll(): Promise<Theme[]> {
     return await prisma.theme.findMany({
       orderBy: { createdAt: 'desc' }
-    });
+    }) as unknown as Promise<Theme[]>;
   }
 
   /**
@@ -19,7 +19,7 @@ export class ThemeRepository {
   async findActive(): Promise<Theme | null> {
     return await prisma.theme.findFirst({
       where: { isActive: true }
-    });
+    }) as unknown as Promise<Theme | null>;
   }
 
   /**
@@ -28,7 +28,7 @@ export class ThemeRepository {
   async findById(id: string): Promise<Theme | null> {
     return await prisma.theme.findUnique({
       where: { id }
-    });
+    }) as unknown as Promise<Theme | null>;
   }
 
   /**
@@ -37,7 +37,7 @@ export class ThemeRepository {
   async findBySlug(slug: string): Promise<Theme | null> {
     return await prisma.theme.findUnique({
       where: { slug }
-    });
+    }) as unknown as Promise<Theme | null>;
   }
 
   /**
@@ -58,7 +58,7 @@ export class ThemeRepository {
         siteName: data.siteName,
         isActive: false
       }
-    });
+    }) as unknown as Promise<Theme>;
   }
 
   /**
@@ -79,7 +79,7 @@ export class ThemeRepository {
         ...(data.logo !== undefined && { logo: data.logo }),
         ...(data.siteName && { siteName: data.siteName })
       }
-    });
+    }) as unknown as Promise<Theme>;
   }
 
   /**
@@ -105,7 +105,7 @@ export class ThemeRepository {
     return await prisma.theme.update({
       where: { id },
       data: { isActive: true }
-    });
+    }) as unknown as Promise<Theme>;
   }
 
   /**
@@ -131,7 +131,7 @@ export class ThemeRepository {
         siteName: original.siteName,
         isActive: false
       }
-    });
+    }) as unknown as Promise<Theme>;
   }
 }
 

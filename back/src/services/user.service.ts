@@ -7,7 +7,7 @@ export class UserService implements IUserService {
   async getUserById(userId: string): Promise<User | null> {
     const user = await userRepository.findById(userId);
     if (!user) return null;
-    return this.formatUser(user);
+    return user;
   }
 
   async getUserProfile(userId: string): Promise<UserProfile | null> {
@@ -20,7 +20,7 @@ export class UserService implements IUserService {
     ]);
 
     return {
-      ...this.formatUser(user),
+      ...user,
       articlesCount,
       likesCount,
     };
@@ -28,25 +28,25 @@ export class UserService implements IUserService {
 
   async getAllUsers(): Promise<User[]> {
     const users = await userRepository.findAll();
-    return users.map(user => this.formatUser(user));
+    return users;
   }
 
   async getUsersByName(name: string): Promise<User[]> {
     const users = await userRepository.findsByPseudo(name);
     if (!users) return [];
-    return users.map(user => this.formatUser(user ));
+    return users.map(user => this.formatUser(user));
   }
 
   async updateUser(userId: string, data: UpdateUserDTO): Promise<User | null> {
     const user = await userRepository.update(userId, data);
     if (!user) return null;
-    return this.formatUser(user);
+    return user;
   }
 
   async updateUserRole(userId: string, role: UserRole): Promise<User | null> {
     const user = await userRepository.updateRole(userId, role);
     if (!user) return null;
-    return this.formatUser(user);
+    return user;
   }
 
   async deleteUser(userId: string): Promise<void> {

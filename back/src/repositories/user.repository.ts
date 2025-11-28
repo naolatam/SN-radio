@@ -1,10 +1,10 @@
 import prisma from '../config/database.config';
-import { UserRole } from '../types/shared.types';
-import { IUserRepository, UserWithProfile, UpdateUserData } from '../types/repository.types';
+import { User, UserRole } from '../types/shared.types';
+import { IUserRepository, UpdateUserData } from '../types/repository.types';
 import { Prisma } from '@prisma/client';
 
 export class UserRepository implements IUserRepository {
-  async findById(id: string): Promise<UserWithProfile | null> {
+  async findById(id: string): Promise<User | null> {
     return prisma.user.findUnique({
       where: { id },
       select: {
@@ -19,7 +19,7 @@ export class UserRepository implements IUserRepository {
         updatedAt: true,
         lastLogin: true,
       },
-    });
+    }) as Promise<User | null>;
   }
 
   async findByEmail(email: string): Promise<Prisma.UserGetPayload<{}> | null> {
@@ -50,7 +50,7 @@ export class UserRepository implements IUserRepository {
     });
   }
 
-  async findAll(): Promise<UserWithProfile[]> {
+  async findAll(): Promise<User[]> {
     return prisma.user.findMany({
       select: {
         id: true,
@@ -65,10 +65,10 @@ export class UserRepository implements IUserRepository {
         lastLogin: true,
       },
       orderBy: { createdAt: 'desc' },
-    });
+    }) as unknown as Promise<User[]>;
   }
 
-  async updateRole(userId: string, role: UserRole): Promise<UserWithProfile> {
+  async updateRole(userId: string, role: UserRole): Promise<User> {
     return prisma.user.update({
       where: { id: userId },
       data: { role },
@@ -84,10 +84,10 @@ export class UserRepository implements IUserRepository {
         updatedAt: true,
         lastLogin: true,
       },
-    });
+    }) as unknown as Promise<User>;
   }
 
-  async update(userId: string, data: UpdateUserData): Promise<UserWithProfile> {
+  async update(userId: string, data: UpdateUserData): Promise<User> {
     return prisma.user.update({
       where: { id: userId },
       data,
@@ -103,7 +103,7 @@ export class UserRepository implements IUserRepository {
         updatedAt: true,
         lastLogin: true,
       },
-    });
+    }) as unknown as Promise<User>;
   }
 
   async updateLastLogin(userId: string): Promise<Prisma.UserGetPayload<{}>> {
