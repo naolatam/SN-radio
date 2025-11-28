@@ -3,7 +3,7 @@ import { auth } from '../config/auth.config';
 import { AuthRequest, Middleware } from '../types/controller.types';
 import { UserRole } from '../types/shared.types';
 import { BetterAuthSession, IAuthMiddleware } from '../types/middleware.types';
-import { userService } from '@/services/user.service';
+import { userService } from '../services/user.service';
 
 /**
  * Auth Middleware Helper Class
