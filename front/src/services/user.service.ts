@@ -45,6 +45,19 @@ class UserService {
   }
 
   /**
+   * Get all users (admin only)
+   */
+  async getByName(name: string): Promise<User[]> {
+    const response = await httpClient.get<{ users: User[] }>(`${this.basePath}/byName?name=${encodeURIComponent(name)}`);
+    
+    if (response.success && response.data) {
+      return response.data.users || [];
+    }
+    
+    return [];
+  }
+
+  /**
    * Get user by ID (admin only)
    */
   async getById(id: string): Promise<User | null> {

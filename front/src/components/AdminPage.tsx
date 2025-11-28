@@ -2,7 +2,7 @@ import { useState } from 'react';
 import AdminLayout from './admin/AdminLayout';
 import ArticlesSection from './admin/ArticlesSection';
 import CategoriesSection from './admin/CategoriesSection';
-import MembersSection from './admin/MembersSection';
+import StaffSection from './admin/StaffSection';
 import ThemeSection from './admin/ThemeSection';
 
 interface AdminPageProps {
@@ -19,8 +19,8 @@ export default function AdminPage({ onBack, onLogout }: AdminPageProps) {
         return <ArticlesSection />;
       case 'categories':
         return <CategoriesSection />;
-      case 'members':
-        return <MembersSection />;
+      case 'staff':
+        return <StaffSection />;
       case 'theme':
         return <ThemeSection />;
       default:

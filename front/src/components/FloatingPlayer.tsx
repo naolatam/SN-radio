@@ -12,8 +12,10 @@ import { Button } from "./ui/button";
 import { Slider } from "./ui/slider";
 import { useAudio } from "./AudioContext";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { useThemeManager } from "./ThemeManagerContext";
 
 export default function FloatingPlayer() {
+  const { theme } = useThemeManager();
   const [isExpanded, setIsExpanded] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -205,10 +207,10 @@ export default function FloatingPlayer() {
               : "w-15 h-15 sm:w-16 sm:h-16"
           }`}
           style={{
-            backgroundColor: "#12171C95",
-            borderColor: "#ffffff20",
+            backgroundColor: `${theme.colors.background}dd`,
+            borderColor: `${theme.colors.primary}40`,
             boxShadow:
-              "0 25px 50px -12px rgba(0, 126, 255, 0.25)",
+              `0 25px 50px -12px ${theme.colors.primary}40`,
           }}
         >
           {!isExpanded ? (
@@ -228,7 +230,7 @@ export default function FloatingPlayer() {
                 className="absolute inset-0 rounded-2xl"
                 style={{
                   background:
-                    "linear-gradient(135deg, #007EFF40, #FFBB6240)",
+                    `linear-gradient(135deg, ${theme.colors.primary}40, ${theme.colors.secondary}40)`,
                   filter: "blur(8px)",
                 }}
                 animate={{
@@ -320,7 +322,7 @@ export default function FloatingPlayer() {
                   className="text-white hover:bg-white/10 h-10 w-10 p-0 rounded-full"
                   style={{
                     background: isPlaying
-                      ? "linear-gradient(135deg, #007EFF, #FFBB62)"
+                      ? `linear-gradient(135deg, ${theme.colors.primary}, ${theme.colors.secondary})`
                       : "transparent",
                   }}
                 >
@@ -366,7 +368,7 @@ export default function FloatingPlayer() {
                     <motion.div
                       key={i}
                       className="w-1 rounded-full"
-                      style={{ backgroundColor: "#007EFF" }}
+                      style={{ backgroundColor: theme.colors.primary }}
                       animate={{
                         height: [8, Math.random() * 20 + 8, 8],
                         opacity: [0.3, 1, 0.3],

@@ -6,7 +6,7 @@ import { Input } from './ui/input';
 import { Card, CardContent } from './ui/card';
 import { toast } from 'sonner';
 import { useAuth } from './AuthContext';
-import { useTheme } from './ThemeContext';
+import { useThemeManager } from './ThemeManagerContext';
 
 interface UserAuthProps {
   onBack: () => void;
@@ -15,7 +15,7 @@ interface UserAuthProps {
 
 export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
   const { login, loginWithGoogle, register } = useAuth();
-  const { themeColors } = useTheme();
+  const { theme } = useThemeManager();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
@@ -151,15 +151,15 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
         <Card 
           className="overflow-hidden"
           style={{ 
-            backgroundColor: themeColors.background,
-            borderColor: themeColors.border 
+            background: theme.colors.background,
+            borderColor: theme.colors.border 
           }}
         >
           {/* Gradient Header with Avatar */}
           <div 
             className="relative h-40 flex items-center justify-center"
             style={{
-              background: 'linear-gradient(135deg, #FF9A3C 0%, #007EFF 100%)'
+              background: `linear-gradient(135deg, ${theme.colors.primary} 0%, ${theme.colors.secondary} 100%)`
             }}
           >
             <Button
@@ -192,7 +192,7 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: themeColors.text.secondary }} />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: theme.colors.text.secondary }} />
                     <Input
                       name="email"
                       type="email"
@@ -201,9 +201,9 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
                       placeholder="Email"
                       className="pl-10"
                       style={{ 
-                        backgroundColor: `${themeColors.button.primary}20`,
-                        borderColor: themeColors.border,
-                        color: themeColors.text.primary 
+                        backgroundColor: `${theme.colors.button.primary}20`,
+                        borderColor: theme.colors.border,
+                        color: theme.colors.text.primary 
                       }}
                       required
                     />
@@ -212,7 +212,7 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
 
                 <div className="space-y-2">
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: themeColors.text.secondary }} />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: theme.colors.text.secondary }} />
                     <Input
                       name="password"
                       type={showPassword ? "text" : "password"}
@@ -221,9 +221,9 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
                       placeholder="Mot de passe"
                       className="pl-10 pr-10"
                       style={{ 
-                        backgroundColor: `${themeColors.button.primary}20`,
-                        borderColor: themeColors.border,
-                        color: themeColors.text.primary 
+                        backgroundColor: `${theme.colors.button.primary}20`,
+                        borderColor: theme.colors.border,
+                        color: theme.colors.text.primary 
                       }}
                       required
                     />
@@ -233,8 +233,8 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
                       className="absolute right-0 mr-2 top-1/2 transform -translate-y-1/2"
                     >
                       {showPassword ? 
-                        <EyeOff className="h-4 w-4" style={{ color: themeColors.text.secondary }} /> : 
-                        <Eye className="h-4 w-4" style={{ color: themeColors.text.secondary }} />
+                        <EyeOff className="h-4 w-4" style={{ color: theme.colors.text.secondary }} /> : 
+                        <Eye className="h-4 w-4" style={{ color: theme.colors.text.secondary }} />
                       }
                     </button>
                   </div>
@@ -265,7 +265,7 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
               <form onSubmit={handleRegister} className="space-y-4">
                 <div className="space-y-2">
                   <div className="relative">
-                    <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: themeColors.text.secondary }} />
+                    <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: theme.colors.text.secondary }} />
                     <Input
                       name="pseudo"
                       type="text"
@@ -274,9 +274,9 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
                       placeholder="Pseudo"
                       className="pl-10"
                       style={{ 
-                        backgroundColor: `${themeColors.button.primary}20`,
-                        borderColor: themeColors.border,
-                        color: themeColors.text.primary 
+                        backgroundColor: `${theme.colors.button.primary}20`,
+                        borderColor: theme.colors.border,
+                        color: theme.colors.text.primary 
                       }}
                       required
                     />
@@ -285,7 +285,7 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
 
                 <div className="space-y-2">
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: themeColors.text.secondary }} />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: theme.colors.text.secondary }} />
                     <Input
                       name="email"
                       type="email"
@@ -294,9 +294,9 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
                       placeholder="Email"
                       className="pl-10"
                       style={{ 
-                        backgroundColor: `${themeColors.button.primary}20`,
-                        borderColor: themeColors.border,
-                        color: themeColors.text.primary 
+                        backgroundColor: `${theme.colors.button.primary}20`,
+                        borderColor: theme.colors.border,
+                        color: theme.colors.text.primary 
                       }}
                       required
                     />
@@ -305,7 +305,7 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
 
                 <div className="space-y-2">
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: themeColors.text.secondary }} />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: theme.colors.text.secondary }} />
                     <Input
                       name="password"
                       type={showPassword ? "text" : "password"}
@@ -314,9 +314,9 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
                       placeholder="Mot de passe"
                       className="pl-10 pr-10"
                       style={{ 
-                        backgroundColor: `${themeColors.button.primary}20`,
-                        borderColor: themeColors.border,
-                        color: themeColors.text.primary 
+                        backgroundColor: `${theme.colors.button.primary}20`,
+                        borderColor: theme.colors.border,
+                        color: theme.colors.text.primary 
                       }}
                       required
                     />
@@ -326,8 +326,8 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
                       className="absolute right-0 mr-2 top-1/2 transform -translate-y-1/2"
                     >
                       {showPassword ? 
-                        <EyeOff className="h-4 w-4" style={{ color: themeColors.text.secondary }} /> : 
-                        <Eye className="h-4 w-4" style={{ color: themeColors.text.secondary }} />
+                        <EyeOff className="h-4 w-4" style={{ color: theme.colors.text.secondary }} /> : 
+                        <Eye className="h-4 w-4" style={{ color: theme.colors.text.secondary }} />
                       }
                     </button>
                   </div>
@@ -335,7 +335,7 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
 
                 <div className="space-y-2">
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: themeColors.text.secondary }} />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" style={{ color: theme.colors.text.secondary }} />
                     <Input
                       name="confirmPassword"
                       type={showPassword ? "text" : "password"}
@@ -344,9 +344,9 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
                       placeholder="Confirmer le mot de passe"
                       className="pl-10"
                       style={{ 
-                        backgroundColor: `${themeColors.button.primary}20`,
-                        borderColor: themeColors.border,
-                        color: themeColors.text.primary 
+                        backgroundColor: `${theme.colors.button.primary}20`,
+                        borderColor: theme.colors.border,
+                        color: theme.colors.text.primary 
                       }}
                       required
                     />
@@ -378,10 +378,10 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
             {/* Divider */}
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" style={{ borderColor: themeColors.border }} />
+                <span className="w-full border-t" style={{ borderColor: theme.colors.border }} />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="px-2 text-xs" style={{ backgroundColor: themeColors.background, color: themeColors.text.secondary }}>
+                <span className="px-2 text-xs" style={{ backgroundColor: theme.colors.background, color: theme.colors.text.secondary }}>
                   Ou
                 </span>
               </div>
@@ -393,8 +393,8 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
               variant="outline"
               className="w-full"
               style={{ 
-                borderColor: themeColors.border,
-                color: themeColors.text.primary
+                borderColor: theme.colors.border,
+                color: theme.colors.text.primary
               }}
               disabled={isLoading}
             >
@@ -413,7 +413,7 @@ export default function UserAuth({ onBack, onSuccess }: UserAuthProps) {
                 type="button"
                 onClick={() => setIsLogin(!isLogin)}
                 className="text-sm hover:underline"
-                style={{ color: themeColors.text.secondary }}
+                style={{ color: theme.colors.text.secondary }}
               >
                 {isLogin ? "Pas encore de compte ? S'inscrire" : "Déjà un compte ? Se connecter"}
               </button>

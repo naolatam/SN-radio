@@ -46,7 +46,7 @@ export default function LikedArticlesPage() {
   // If not authenticated
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(135deg, #12171C 0%, #1a2025 50%, #12171C 100%)'}}>
+      <div className="min-h-screen flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -74,7 +74,7 @@ export default function LikedArticlesPage() {
   // Loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(135deg, #12171C 0%, #1a2025 50%, #12171C 100%)'}}>
+      <div className="min-h-screen flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -90,7 +90,7 @@ export default function LikedArticlesPage() {
   // Error state
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(135deg, #12171C 0%, #1a2025 50%, #12171C 100%)'}}>
+      <div className="min-h-screen flex items-center justify-center" >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -116,7 +116,7 @@ export default function LikedArticlesPage() {
   // Empty state
   if (likedArticles.length === 0) {
     return (
-      <div className="min-h-screen" style={{background: 'linear-gradient(135deg, #12171C 0%, #1a2025 50%, #12171C 100%)'}}>
+      <div className="min-h-screen">
         <div className="container mx-auto px-4 py-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -153,7 +153,7 @@ export default function LikedArticlesPage() {
 
   // Render liked articles using NewsPage component
   return (
-    <div className="min-h-screen" style={{background: 'linear-gradient(135deg, #12171C 0%, #1a2025 50%, #12171C 100%)'}}>
+    <div className="min-h-screen">
       <div className="container mx-auto px-4 py-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

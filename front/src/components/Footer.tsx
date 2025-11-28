@@ -11,15 +11,16 @@ import {
   Coffee,
 } from "lucide-react";
 import { useNavigation } from "@/hooks/useNavigation";
-import snRadioLogo from "figma:asset/2139041d24232c172eb80f7428131e88b26c339b.png";
+import { useThemeManager } from "./ThemeManagerContext";
 
 export default function Footer() {
   const { scrollToSection, goToLegal } = useNavigation();
+  const { theme } = useThemeManager();
   return (
     <footer
       style={{
-        backgroundColor: "#12171C",
-        borderTopColor: "#ffffff20",
+        backgroundColor: theme.colors.background,
+        borderTopColor: theme.colors.border,
       }}
       className="border-t"
     >
@@ -30,13 +31,13 @@ export default function Footer() {
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center">
                 <img
-                  src={snRadioLogo}
+                  src={theme.branding.logo}
                   alt="SN-Radio Logo"
                   className="w-full h-full object-contain brightness-0 invert"
                 />
               </div>
               <span className="text-xl md:text-2xl font-bold text-white">
-                SN-Radio
+                {theme.branding.siteName}
               </span>
             </div>
             <p className="text-gray-400 mb-4 max-w-md">

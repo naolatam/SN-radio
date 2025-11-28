@@ -193,6 +193,32 @@ export class ArticleController {
       } as ApiResponse);
     }
   }
+
+  async getLikedArticles(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      if (!req.user) {
+        res.status(401).json({
+          success: false,
+          error: 'Authentication required',
+        } as ApiResponse);
+        return;
+      }
+
+      const currentUserId = req.user.id;
+      const articles = await articleService.getLikedArticles(currentUserId, currentUserId);
+
+      res.json({
+        success: true,
+        data: articles,
+      } as ApiResponse);
+    } catch (error) {
+      console.error('Error in getLikedArticles:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Internal server error',
+      } as ApiResponse);
+    }
+  }
 }
 
 export const articleController = new ArticleController();

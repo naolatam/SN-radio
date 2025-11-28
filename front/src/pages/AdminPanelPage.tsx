@@ -5,17 +5,21 @@
 import { useNavigate } from 'react-router-dom';
 import AdminPage from '@/components/AdminPage';
 import { ROUTES } from '@/config/routes.config';
+import { useAuth } from '@/components/AuthContext';
+import { toast } from 'sonner';
 
 export default function AdminPanelPage() {
   const navigate = useNavigate();
-
+  const { logout } = useAuth();
   const handleBack = () => {
     navigate(ROUTES.HOME);
   };
 
   const handleLogout = () => {
-    navigate(ROUTES.HOME);
+    logout();
+    toast.success('Déconnexion réussie');
   };
+
 
   return (
     <AdminPage 

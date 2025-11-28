@@ -3,7 +3,6 @@ import {
   UserProfile,
   Article,
   Category,
-  SiteConfig,
   UserRole,
   ArticleFilters,
   CreateArticleDTO,
@@ -11,8 +10,6 @@ import {
   UpdateUserDTO,
   CreateCategoryDTO,
   UpdateCategoryDTO,
-  CreateConfigDTO,
-  UpdateConfigDTO,
 } from './shared.types';
 
 /**
@@ -76,14 +73,13 @@ export interface ICategoryService {
   getArticleCount(categoryId: string): Promise<number>;
 }
 
-// SiteConfig Service Types
-export interface ISiteConfigService {
-  getAllConfigs(): Promise<SiteConfig[]>;
-  getActiveConfigs(): Promise<SiteConfig[]>;
-  getConfigByKey(key: string): Promise<SiteConfig | null>;
-  getConfigById(id: string): Promise<SiteConfig | null>;
-  createConfig(data: CreateConfigDTO): Promise<SiteConfig>;
-  updateConfig(id: string, data: UpdateConfigDTO): Promise<SiteConfig | null>;
-  deleteConfig(id: string): Promise<boolean>;
-  toggleConfigActive(id: string): Promise<SiteConfig | null>;
+// Staff Service Types
+export interface IStaffService {
+  getAllStaff(): Promise<import('./shared.types').StaffPresenterDTO[]>;
+  getStaffById(staffId: string): Promise<import('./shared.types').StaffPresenterDTO | null>;
+  getStaffByUserId(userId: string): Promise<import('./shared.types').StaffPresenterDTO | null>;
+  createStaff(data: import('./shared.types').CreateStaffDTO): Promise<import('./shared.types').StaffPresenterDTO>;
+  updateStaff(staffId: string, data: import('./shared.types').UpdateStaffDTO): Promise<import('./shared.types').StaffPresenterDTO | null>;
+  deleteStaff(staffId: string): Promise<boolean>;
+  getStaffCount(): Promise<number>;
 }

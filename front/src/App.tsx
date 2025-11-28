@@ -12,7 +12,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AudioProvider } from './components/AudioContext';
 import { AuthProvider } from './components/AuthContext';
 import { TooltipProvider } from './components/ui/tooltip';
-import { ThemeProvider } from './components/ThemeContext';
+import { ThemeManagerProvider } from './components/ThemeManagerContext';
 import FloatingPlayer from './components/FloatingPlayer';
 import ProtectedRoute from './components/routing/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
@@ -66,14 +66,14 @@ export default function App() {
   return (
     <BrowserRouter>
       <TooltipProvider>
-        <ThemeProvider>
+        <ThemeManagerProvider>
           <AuthProvider>
             <AudioProvider>
               <AppRoutes />
               <FloatingPlayer />
             </AudioProvider>
           </AuthProvider>
-        </ThemeProvider>
+        </ThemeManagerProvider>
       </TooltipProvider>
     </BrowserRouter>
   );

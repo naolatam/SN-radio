@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { ArrowLeft, FileText, Shield, Scale } from 'lucide-react';
 import { Button } from './ui/button';
+import { useThemeManager } from './ThemeManagerContext';
 
 interface LegalPagesProps {
   currentPage: 'mentions' | 'privacy' | 'terms' | null;
@@ -8,23 +9,24 @@ interface LegalPagesProps {
 }
 
 export default function LegalPages({ currentPage, onBack }: LegalPagesProps) {
+  const { theme } = useThemeManager();
   if (!currentPage) return null;
 
   const pageConfig = {
     mentions: {
       title: 'Mentions légales',
       icon: FileText,
-      content: <MentionsLegalesContent />
+      content: <MentionsLegalesContent theme={theme} />
     },
     privacy: {
       title: 'Politique de confidentialité',
       icon: Shield,
-      content: <PolitiqueConfidentialiteContent />
+      content: <PolitiqueConfidentialiteContent theme={theme} />
     },
     terms: {
       title: 'Conditions Générales d\'Utilisation',
       icon: Scale,
-      content: <CGUContent />
+      content: <CGUContent theme={theme} />
     }
   };
 
@@ -32,7 +34,7 @@ export default function LegalPages({ currentPage, onBack }: LegalPagesProps) {
   const IconComponent = config.icon;
 
   return (
-    <div className="min-h-screen" style={{background: 'linear-gradient(135deg, #12171C 0%, #1a2025 50%, #12171C 100%)'}}>
+    <div className="min-h-screen" style={{background: `linear-gradient(135deg, ${theme.colors.background} 0%, ${theme.colors.background}ee 50%, ${theme.colors.background} 100%)`}}>
       <div className="container mx-auto px-4 py-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -51,7 +53,7 @@ export default function LegalPages({ currentPage, onBack }: LegalPagesProps) {
               Retour
             </Button>
             <div className="flex items-center space-x-3">
-              <IconComponent className="h-6 w-6" style={{ color: '#007EFF' }} />
+              <IconComponent className="h-6 w-6" style={{ color: theme.colors.primary }} />
               <h1 className="text-3xl font-bold text-white">{config.title}</h1>
             </div>
           </div>
@@ -59,7 +61,7 @@ export default function LegalPages({ currentPage, onBack }: LegalPagesProps) {
           {/* Content */}
           <div 
             className="backdrop-blur-sm rounded-xl p-8 border"
-            style={{ backgroundColor: '#12171C80', borderColor: '#ffffff20' }}
+            style={{ backgroundColor: `${theme.colors.background}cc`, borderColor: `${theme.colors.primary}40` }}
           >
             {config.content}
           </div>
@@ -69,11 +71,15 @@ export default function LegalPages({ currentPage, onBack }: LegalPagesProps) {
   );
 }
 
-function MentionsLegalesContent() {
+interface LegalContentProps {
+  theme: { colors: { primary: string; secondary: string; background: string } };
+}
+
+function MentionsLegalesContent({ theme }: LegalContentProps) {
   return (
     <div className="text-gray-300 space-y-6">
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           1. Informations légales
         </h2>
         <div className="space-y-3">
@@ -85,7 +91,7 @@ function MentionsLegalesContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           2. Hébergement
         </h2>
         <p>
@@ -95,7 +101,7 @@ function MentionsLegalesContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           3. Propriété intellectuelle
         </h2>
         <p>
@@ -106,7 +112,7 @@ function MentionsLegalesContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           4. Responsabilité
         </h2>
         <p>
@@ -118,7 +124,7 @@ function MentionsLegalesContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           5. Droit applicable
         </h2>
         <p>
@@ -134,7 +140,7 @@ function PolitiqueConfidentialiteContent() {
   return (
     <div className="text-gray-300 space-y-6">
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           1. Collecte des données
         </h2>
         <p>
@@ -149,7 +155,7 @@ function PolitiqueConfidentialiteContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           2. Utilisation des données
         </h2>
         <p>
@@ -164,7 +170,7 @@ function PolitiqueConfidentialiteContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           3. Conservation des données
         </h2>
         <p>
@@ -174,7 +180,7 @@ function PolitiqueConfidentialiteContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           4. Vos droits
         </h2>
         <p>
@@ -193,7 +199,7 @@ function PolitiqueConfidentialiteContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           5. Cookies
         </h2>
         <p>
@@ -204,7 +210,7 @@ function PolitiqueConfidentialiteContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           6. Contact
         </h2>
         <p>
@@ -220,7 +226,7 @@ function CGUContent() {
   return (
     <div className="text-gray-300 space-y-6">
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           1. Objet
         </h2>
         <p>
@@ -230,7 +236,7 @@ function CGUContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           2. Accès au service
         </h2>
         <p>
@@ -240,7 +246,7 @@ function CGUContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           3. Utilisation du service
         </h2>
         <p>
@@ -255,7 +261,7 @@ function CGUContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           4. Propriété intellectuelle
         </h2>
         <p>
@@ -266,7 +272,7 @@ function CGUContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           5. Responsabilité
         </h2>
         <p>
@@ -280,7 +286,7 @@ function CGUContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           6. Données personnelles
         </h2>
         <p>
@@ -290,7 +296,7 @@ function CGUContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           7. Modification des CGU
         </h2>
         <p>
@@ -300,7 +306,7 @@ function CGUContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           8. Droit applicable et juridiction
         </h2>
         <p>
@@ -310,7 +316,7 @@ function CGUContent() {
       </section>
 
       <section>
-        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: '#FFBB62' }}>
+        <h2 className="text-xl font-semibold text-white mb-4" style={{ color: theme.colors.secondary }}>
           9. Contact
         </h2>
         <p>

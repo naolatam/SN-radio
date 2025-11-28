@@ -10,13 +10,14 @@ import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 import LikeButton from '@/components/LikeButton';
 import { useArticles } from '@/hooks/useArticles';
 import { ROUTES } from '@/config/routes.config';
-import defaultLogo from 'figma:asset/2139041d24232c172eb80f7428131e88b26c339b.png';
 import getTimeAgo from '@/utils/date.utils';
+import { useThemeManager } from '@/components/ThemeManagerContext';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { useMemo } from 'react';
 
 export default function ArticlePage() {
+  const { theme } = useThemeManager();
   const { articleId } = useParams<{ articleId: string }>();
   const navigate = useNavigate();
   const { articles } = useArticles();
@@ -77,7 +78,7 @@ export default function ArticlePage() {
             <div className="relative h-64 md:h-96">
               <ImageWithFallback 
                 className='w-full h-full object-cover' 
-                src={article.pictureUrl || defaultLogo}
+                src={article.pictureUrl || theme.branding.logo}
                 alt={article.title}
               />
               

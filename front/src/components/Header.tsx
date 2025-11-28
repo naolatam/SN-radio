@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import SNRadioLogo from './SNRadioLogo';
 
 import { useAuth } from './AuthContext';
-import { useTheme } from './ThemeContext';
+import { useThemeManager } from './ThemeManagerContext';
 import { useNavigation } from '@/hooks/useNavigation';
 import UserProfile from './UserProfile';
 import { UserRole } from '@/types/shared.types';
@@ -21,7 +21,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showUserProfile, setShowUserProfile] = useState(false);
   const { user, isAuthenticated } = useAuth();
-  const { themeColors } = useTheme();
+  const { theme } = useThemeManager();
   const { goHome, goToNews, goToAuth, goToLiked, scrollToSection } = useNavigation();
   const location = useLocation();
   const isStaff = user?.role === UserRole.ADMIN || user?.role === UserRole.STAFF;
@@ -52,7 +52,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b" style={{backgroundColor: `${themeColors.background}95`, borderBottomColor: themeColors.border}}>
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b" style={{ backgroundColor: `${theme.colors.primary}15`, borderBottomColor: `${theme.colors.primary}30` }}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -66,8 +66,8 @@ export default function Header() {
                 className="text-white"
               />
             </div>
-            <span className="text-xl md:text-2xl font-bold" style={{color: themeColors.text.primary}}>
-              SN-Radio
+            <span className="text-xl md:text-2xl font-bold" style={{color: theme.colors.text.primary}}>
+              {theme.branding.siteName}
             </span>
           </div>
 
@@ -98,16 +98,16 @@ export default function Header() {
                     <AvatarImage src={user.image} alt={user.name || 'User Avatar'} />
                     <AvatarFallback 
                       className="text-xs font-medium"
-                      style={{ background: themeColors.button.primary }}
+                      style={{ background: theme.colors.button.primary }}
                     >
                       {user.name?.charAt(0)?.toUpperCase() || 'U'}
                     </AvatarFallback>
                   </Avatar>
                   <span className="hidden lg:inline">{user.name}</span>
                   {isStaff ? (
-                    <Axe className="h-3 w-3" style={{ color: themeColors.secondary }} />
+                    <Axe className="h-3 w-3" style={{ color: theme.colors.secondary }} />
                   ) : (
-                    <User className="h-3 w-3" style={{ color: themeColors.primary }} />
+                    <User className="h-3 w-3" style={{ color: theme.colors.primary }} />
                   )}
                 </Button>
               ) : (
@@ -163,16 +163,16 @@ export default function Header() {
                 <Avatar className="h-5 w-5 mr-2">
                   <AvatarFallback 
                     className="text-xs"
-                    style={{ background: themeColors.button.primary }}
+                    style={{ background: theme.colors.button.primary }}
                   >
                     {user.name?.charAt(0)?.toUpperCase() || 'U'}
                   </AvatarFallback>
                 </Avatar>
                 {user.name}
                 {isStaff ? (
-                  <Lock className="h-3 w-3 ml-2" style={{ color: themeColors.secondary }} />
+                  <Lock className="h-3 w-3 ml-2" style={{ color: theme.colors.secondary }} />
                 ) : (
-                  <User className="h-3 w-3 ml-2" style={{ color: themeColors.primary }} />
+                  <User className="h-3 w-3 ml-2" style={{ color: theme.colors.primary }} />
                 )}
               </button>
             ) : (

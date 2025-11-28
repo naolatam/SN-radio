@@ -1,37 +1,20 @@
-import { Prisma, UserRole, ConfigType } from '@prisma/client';
+import { Prisma, ConfigType } from '@prisma/client';
 import {
   User,
   Article,
   Category,
-  SiteConfig,
-  ConfigValue,
   CreateArticleDTO,
   UpdateArticleDTO,
   ArticleFilters,
   CreateCategoryDTO,
   UpdateCategoryDTO,
-  CreateConfigDTO,
-  UpdateConfigDTO,
+  UserRole,
 } from './shared.types';
 
 /**
  * Repository Interfaces
  * Define strict return types for all repository methods
  */
-
-// User Repository Types
-export interface UserWithProfile {
-  id: string;
-  name: string; // Database field (Better Auth standard)
-  email: string;
-  emailVerified: boolean;
-  image: string | null; // Database field (Better Auth standard)
-  description: string | null;
-  role: UserRole;
-  createdAt: Date;
-  updatedAt: Date;
-  lastLogin: Date | null;
-}
 
 export interface UpdateUserData {
   name?: string; // Database field (Better Auth standard)
@@ -41,12 +24,12 @@ export interface UpdateUserData {
 }
 
 export interface IUserRepository {
-  findById(id: string): Promise<UserWithProfile | null>;
+  findById(id: string): Promise<User | null>;
   findByEmail(email: string): Promise<Prisma.UserGetPayload<{}> | null>;
   findByPseudo(pseudo: string): Promise<Prisma.UserGetPayload<{}> | null>;
-  findAll(): Promise<UserWithProfile[]>;
-  updateRole(userId: string, role: UserRole): Promise<UserWithProfile>;
-  update(userId: string, data: UpdateUserData): Promise<UserWithProfile>;
+  findAll(): Promise<User[]>;
+  updateRole(userId: string, role: UserRole): Promise<User>;
+  update(userId: string, data: UpdateUserData): Promise<User>;
   updateLastLogin(userId: string): Promise<Prisma.UserGetPayload<{}>>;
   delete(userId: string): Promise<Prisma.UserGetPayload<{}>>;
   count(): Promise<number>;
@@ -118,36 +101,40 @@ export interface ILikeRepository {
   getArticleLikers(articleId: string): Promise<ArticleLikeWithUser[]>;
 }
 
-// SiteConfig Repository Types
-export interface ConfigValueWithType {
+// Staff Repository Types
+export interface StaffWithUser {
   id: string;
-  key: string;
-  value: string;
-  valueType: ConfigType;
-  displayOrder: number;
-  configId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface SiteConfigWithValues {
-  id: string;
-  key: string;
-  name: string;
   description: string | null;
-  isActive: boolean;
+  role: string;
+  userId: string;
   createdAt: Date;
   updatedAt: Date;
-  values: ConfigValueWithType[];
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    image: string | null;
+    role: UserRole;
+  };
 }
 
-export interface ISiteConfigRepository {
-  findAll(): Promise<SiteConfigWithValues[]>;
-  findActive(): Promise<SiteConfigWithValues[]>;
-  findByKey(key: string): Promise<SiteConfigWithValues | null>;
-  findById(id: string): Promise<SiteConfigWithValues | null>;
-  create(data: CreateConfigDTO): Promise<SiteConfigWithValues>;
-  update(id: string, data: UpdateConfigDTO): Promise<SiteConfigWithValues>;
-  delete(id: string): Promise<Prisma.SiteConfigGetPayload<{}>>;
-  toggleActive(id: string): Promise<SiteConfigWithValues>;
+export interface CreateStaffData {
+  userId: string;
+  role: string;
+  description?: string;
+}
+
+export interface UpdateStaffData {
+  role?: string;
+  description?: string;
+}
+
+export interface IStaffRepository {
+  findAll(): Promise<StaffWithUser[]>;
+  findById(id: string): Promise<StaffWithUser | null>;
+  findByUserId(userId: string): Promise<StaffWithUser | null>;
+  create(data: CreateStaffData): Promise<StaffWithUser>;
+  update(id: string, data: UpdateStaffData): Promise<StaffWithUser>;
+  delete(id: string): Promise<void>;
+  count(): Promise<number>;
 }

@@ -4,8 +4,8 @@ import { ExternalLink, Clock, Calendar, ArrowRight, Eye } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import LikeButton from './LikeButton';
 import { Article } from '@/types/shared.types';
-import defaultLogo from 'figma:asset/2139041d24232c172eb80f7428131e88b26c339b.png';
 import getTimeAgo from '@/utils/date.utils';
+import { useThemeManager } from './ThemeManagerContext';
 
 interface NewsSectionProps {
   onNewsClick?: () => void;
@@ -15,6 +15,8 @@ interface NewsSectionProps {
 }
 
 export default function NewsSection({ onNewsClick, onArticleClick, onLoginRequired, articles = [] }: NewsSectionProps) {
+  const { theme } = useThemeManager();
+  
   const handleArticleClick = (articleId: string) => {
     if (onArticleClick) {
       onArticleClick(articleId);
@@ -35,7 +37,7 @@ export default function NewsSection({ onNewsClick, onArticleClick, onLoginRequir
   
 
   return (
-    <section id="actualites" className="py-16 px-4" style={{backgroundColor: '#12171C80'}}>
+    <section id="actualites" className="py-16 px-4" style={{backgroundColor: `${theme.colors.background}cc`}}>
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-white mb-4">Actualités</h2>
@@ -46,7 +48,7 @@ export default function NewsSection({ onNewsClick, onArticleClick, onLoginRequir
             <Button
               onClick={onNewsClick}
               className="bg-transparent border-2 hover:bg-white/10 text-white transition-all duration-300"
-              style={{ borderColor: '#007EFF' }}
+              style={{ borderColor: theme.colors.primary }}
             >
               <Eye className="h-4 w-4 mr-2" />
               Voir toutes les actualités
@@ -60,12 +62,12 @@ export default function NewsSection({ onNewsClick, onArticleClick, onLoginRequir
             <Card 
               key={article.id} 
               className="overflow-hidden transition-all duration-300 hover:scale-105 cursor-pointer group" 
-              style={{backgroundColor: '#12171C80', borderColor: '#ffffff20'}}
+              style={{backgroundColor: `${theme.colors.background}cc`, borderColor: `${theme.colors.primary}40`}}
               onClick={() => handleArticleClick(article.id)}
             >
               <div className="relative">
                 <ImageWithFallback
-                  src={article.pictureUrl || defaultLogo}
+                  src={article.pictureUrl || theme.branding.logo}
                   alt={article.title || 'Article'}
                   className="w-full h-48 object-cover"
                 />
@@ -91,7 +93,7 @@ export default function NewsSection({ onNewsClick, onArticleClick, onLoginRequir
               </div>
               
               <CardContent className="p-6">
-                <h3 className="text-white font-semibold mb-2 line-clamp-2 group-hover:text-[#FFBB62] transition-colors duration-300">
+                <h3 className="text-white font-semibold mb-2 line-clamp-2 transition-colors duration-300" style={{color: 'white'}}>
                   {article.title || 'Titre non disponible'}
                 </h3>
                 <p className="text-gray-400 text-sm mb-4 line-clamp-3">
@@ -121,7 +123,7 @@ export default function NewsSection({ onNewsClick, onArticleClick, onLoginRequir
                 
                 <Button 
                   className="w-full text-white hover:opacity-90 transition-opacity group-hover:scale-105"
-                  style={{background: 'linear-gradient(135deg, #007EFF, #FFBB62)'}}
+                  style={{background: `linear-gradient(135deg, ${theme.colors.primary}, ${theme.colors.secondary})`}}
                 >
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Lire l'article

@@ -7,13 +7,13 @@ import AudioPlayer from '@/components/AudioPlayer';
 import NowPlaying from '@/components/NowPlaying';
 import NewsSection from '@/components/NewsSection';
 import TeamSection from '@/components/TeamSection';
-import { useTheme } from '@/components/ThemeContext';
+import { useThemeManager } from '@/components/ThemeManagerContext';
 import { useArticles } from '@/hooks/useArticles';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES, buildArticleRoute } from '@/config/routes.config';
 
 export default function HomePage() {
-  const { themeColors } = useTheme();
+  const { theme } = useThemeManager();
   const { articles } = useArticles();
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: themeColors.backgroundGradient }}>
+    <div className="min-h-screen" style={{ background: theme.colors.gradient.main }}>
       {/* Hero Section */}
       <section id="accueil" className="pt-20 pb-16 px-4">
         <div className="container mx-auto">

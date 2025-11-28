@@ -1,7 +1,7 @@
 import { userRepository } from '../repositories/user.repository';
 import { User, UserProfile, UserRole, UpdateUserDTO } from '../types/shared.types';
 import { IUserService } from '../types/service.types';
-import { UserWithProfile } from '../types/repository.types';
+import { Prisma } from '.prisma/client/default';
 
 export class UserService implements IUserService {
   async getUserById(userId: string): Promise<User | null> {
@@ -31,6 +31,12 @@ export class UserService implements IUserService {
     return users.map(user => this.formatUser(user));
   }
 
+  async getUsersByName(name: string): Promise<User[]> {
+    const users = await userRepository.findsByPseudo(name);
+    if (!users) return [];
+    return users.map(user => this.formatUser(user ));
+  }
+
   async updateUser(userId: string, data: UpdateUserDTO): Promise<User | null> {
     const user = await userRepository.update(userId, data);
     if (!user) return null;
@@ -55,7 +61,7 @@ export class UserService implements IUserService {
     return userRepository.count();
   }
 
-  private formatUser(user: UserWithProfile): User {
+  private formatUser(user: Prisma.UserGetPayload<{}>): User {
     return {
       id: user.id,
       name: user.name, // Map database 'name' to application 'name'

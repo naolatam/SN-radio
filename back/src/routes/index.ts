@@ -2,6 +2,8 @@ import { Router, Request, Response } from 'express';
 import userRoutes from './user.routes';
 import articleRoutes from './article.routes';
 import categoryRoutes from './category.routes';
+import themeRoutes from './theme.routes';
+import staffRoutes from './staff.routes';
 
 const router = Router();
 
@@ -9,6 +11,8 @@ const router = Router();
 router.use('/users', userRoutes);
 router.use('/articles', articleRoutes);
 router.use('/categories', categoryRoutes);
+router.use('/themes', themeRoutes);
+router.use('/staff', staffRoutes);
 
 /**
  * @swagger

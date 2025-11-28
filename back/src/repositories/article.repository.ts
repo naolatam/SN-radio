@@ -258,6 +258,45 @@ export class ArticleRepository implements IArticleRepository {
   async count(): Promise<number> {
     return prisma.article.count();
   }
+
+  async findLikedByUser(userId: string, currentUserId?: string): Promise<Article[]> {
+    const prismaArticles = await prisma.article.findMany({
+      where: {
+        likes: {
+          some: {
+            userId: userId,
+          },
+        },
+      },
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            image: true,
+            role: true,
+            emailVerified: true,
+            description: true,
+          },
+        },
+        categories: {
+          include: {
+            category: true,
+          },
+        },
+        likes: {
+          select: {
+            userId: true,
+          },
+        },
+      },
+      orderBy: {
+        publishedAt: 'desc',
+      },
+    });
+
+    return prismaArticles.map((article) => transformPrismaArticle(article, currentUserId));
+  }
 }
 
 export const articleRepository = new ArticleRepository();

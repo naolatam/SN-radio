@@ -1,22 +1,17 @@
-const getTimeAgo = (date: Date): string => {
+export default function dateToTimeAgo(date: Date | string): string {
     const now = new Date();
     const past = new Date(date);
-    const diffMs = now.getTime() - past.getTime();
-    const diffSecs = Math.floor(diffMs / 1000);
-    const diffMins = Math.floor(diffSecs / 60);
-    const diffHours = Math.floor(diffMins / 60);
-    const diffDays = Math.floor(diffHours / 24);
-    const diffWeeks = Math.floor(diffDays / 7);
-    const diffMonths = Math.floor(diffDays / 30);
-    const diffYears = Math.floor(diffDays / 365);
-
-    if (diffYears > 0) return `il y a ${diffYears} an${diffYears > 1 ? 's' : ''}`;
-    if (diffMonths > 0) return `il y a ${diffMonths} mois`;
-    if (diffWeeks > 0) return `il y a ${diffWeeks} semaine${diffWeeks > 1 ? 's' : ''}`;
-    if (diffDays > 0) return `il y a ${diffDays} jour${diffDays > 1 ? 's' : ''}`;
-    if (diffHours > 0) return `il y a ${diffHours} heure${diffHours > 1 ? 's' : ''}`;
-    if (diffMins > 0) return `il y a ${diffMins} minute${diffMins > 1 ? 's' : ''}`;
-    return "à l'instant";
-  };
-
-export default getTimeAgo;
+    const secondsAgo = Math.floor((now.getTime() - past.getTime()) / 1000);
+    if (secondsAgo < 60) {
+        return `${secondsAgo} seconds ago`;
+    } else if (secondsAgo < 3600) {
+        const minutes = Math.floor(secondsAgo / 60);
+        return `${minutes} minutes ago`;
+    } else if (secondsAgo < 86400) {
+        const hours = Math.floor(secondsAgo / 3600);
+        return `${hours} hours ago`;
+    } else {
+        const days = Math.floor(secondsAgo / 86400);
+        return `${days} days ago`;
+    }
+}

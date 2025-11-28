@@ -5,7 +5,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
-import defaultLogo from 'figma:asset/2139041d24232c172eb80f7428131e88b26c339b.png';
 import getTimeAgo from '@/utils/date.utils';
 import { 
   Calendar, 
@@ -22,12 +21,14 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import LikeButton from './LikeButton';
 import { Article, Category } from '@/types/shared.types';
 import { buildArticleRoute } from '@/config/routes.config';
+import { useThemeManager } from './ThemeManagerContext';
 
 interface NewsPageProps {
   articles: Article[];
 }
 
 export default function NewsPage({ articles }: NewsPageProps) {
+  const { theme } = useThemeManager();
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("Tous");
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,7 +61,7 @@ export default function NewsPage({ articles }: NewsPageProps) {
   };
 
   return (
-    <div className="min-h-screen" style={{background: 'linear-gradient(135deg, #12171C 0%, #1a2025 50%, #12171C 100%)'}}>
+    <div className="min-h-screen" style={{background: `linear-gradient(135deg, ${theme.colors.background} 0%, ${theme.colors.background}ee 50%, ${theme.colors.background} 100%)`}}>
       <div className="container mx-auto px-4 py-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -92,10 +93,15 @@ export default function NewsPage({ articles }: NewsPageProps) {
                   variant={selectedCategory === "Tous" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedCategory("Tous")}
-                  className={selectedCategory === "Tous" 
-                    ? "bg-[#007EFF] text-white hover:bg-[#005bbf]" 
-                    : "border-gray-600 text-gray-300 hover:bg-gray-800"
-                  }
+                  style={selectedCategory === "Tous" ? {
+                    backgroundColor: theme.colors.primary,
+                    color: '#fff',
+                    borderColor: theme.colors.primary
+                  } : {
+                    borderColor: `${theme.colors.primary}60`,
+                    color: 'rgb(209, 213, 219)'
+                  }}
+                  className="hover:opacity-80 transition-opacity"
                 >
                   Tous
                 </Button>
@@ -126,7 +132,7 @@ export default function NewsPage({ articles }: NewsPageProps) {
           {selectedCategory === "Tous" && searchTerm === "" && featuredNews.length > 0 && (
             <div className="mb-12">
               <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                <span style={{ color: '#FFBB62' }}>À la Une</span>
+                <span style={{ color: theme.colors.secondary }}>À la Une</span>
               </h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {featuredNews.map((article, index) => (
@@ -138,12 +144,12 @@ export default function NewsPage({ articles }: NewsPageProps) {
                   >
                     <Card 
                       className="cursor-pointer overflow-hidden border transition-all duration-300 hover:scale-105"
-                      style={{ backgroundColor: '#12171C80', borderColor: '#ffffff20' }}
+                      style={{ backgroundColor: `${theme.colors.background}cc`, borderColor: `${theme.colors.primary}40` }}
                       onClick={() => handleArticleClick(article.id)}
                     >
                       <div className="relative h-48">
                         <ImageWithFallback
-                          src={article.pictureUrl || defaultLogo}
+                          src={article.pictureUrl || theme.branding.logo}
                           alt={article.title || 'Article'}
                           className="w-full h-full object-cover"
                         />
@@ -175,7 +181,7 @@ export default function NewsPage({ articles }: NewsPageProps) {
                               initialLiked={article.isLikedByCurrentUser}
                               initialLikesCount={article.likes}
                             />
-                            <div className="flex items-center space-x-1" style={{ color: '#007EFF' }}>
+                            <div className="flex items-center space-x-1" style={{ color: theme.colors.primary }}>
                               <span>Lire plus</span>
                               <ChevronRight className="h-4 w-4" />
                             </div>
@@ -211,12 +217,12 @@ export default function NewsPage({ articles }: NewsPageProps) {
                   >
                     <Card 
                       className="cursor-pointer overflow-hidden border transition-all duration-300 hover:scale-105"
-                      style={{ backgroundColor: '#12171C80', borderColor: '#ffffff20' }}
+                      style={{ backgroundColor: `${theme.colors.background}cc`, borderColor: `${theme.colors.primary}40` }}
                       onClick={() => handleArticleClick(article.id)}
                     >
                       <div className="relative h-40">
                         <ImageWithFallback
-                          src={article.pictureUrl || defaultLogo}
+                          src={article.pictureUrl || theme.branding.logo}
                           alt={article.title}
                           className="w-full h-full object-cover"
                         />

@@ -4,7 +4,7 @@ import {
   ArrowLeft, 
   FileText, 
   Tag, 
-  Users, 
+  UserCog,
   Palette, 
   Menu,
   X,
@@ -12,6 +12,7 @@ import {
   LogOut
 } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useThemeManager } from '../ThemeManagerContext';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -24,7 +25,7 @@ interface AdminLayoutProps {
 const sections = [
   { id: 'articles', label: 'Articles', icon: FileText },
   { id: 'categories', label: 'Catégories', icon: Tag },
-  { id: 'members', label: 'Membres', icon: Users },
+  { id: 'staff', label: 'Staff', icon: UserCog },
   { id: 'theme', label: 'Thème', icon: Palette },
 ];
 
@@ -36,11 +37,12 @@ export default function AdminLayout({
   onLogout 
 }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { theme } = useThemeManager();
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen text-white" style={{ backgroundColor: theme.colors.background }}>
       {/* Top Header */}
-      <div className="border-b border-gray-700 bg-gray-800/50 backdrop-blur-sm sticky top-0 z-50">
+      <div className="border-b backdrop-blur-sm sticky top-0 z-50" style={{ backgroundColor: `${theme.colors.primary}15`, borderBottomColor: `${theme.colors.primary}30` }}>
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -88,7 +90,8 @@ export default function AdminLayout({
               animate={{ x: 0 }}
               exit={{ x: -280 }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="fixed left-0 h-screen w-64 bg-gray-800 border-r border-gray-700 z-50"
+              className="fixed left-0 h-screen w-64 border-r z-50"
+              style={{ backgroundColor: `${theme.colors.background}dd`, borderRightColor: `${theme.colors.primary}30` }}
             >
               <nav className="p-4 space-y-2">
                 {sections.map((section) => {
@@ -101,9 +104,12 @@ export default function AdminLayout({
                       onClick={() => onSectionChange(section.id)}
                       className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all ${
                         isActive
-                          ? 'bg-blue-600 text-white shadow-lg'
-                          : 'text-gray-400 hover:bg-gray-700 hover:text-white'
+                          ? 'text-white shadow-lg'
+                          : 'text-gray-400 hover:text-white'
                       }`}
+                      style={isActive ? { backgroundColor: theme.colors.primary } : {}}
+                      onMouseEnter={(e) => !isActive && (e.currentTarget.style.backgroundColor = `${theme.colors.primary}20`)}
+                      onMouseLeave={(e) => !isActive && (e.currentTarget.style.backgroundColor = 'transparent')}
                     >
                       <Icon className="h-5 w-5" />
                       <span className="font-medium">{section.label}</span>
@@ -113,7 +119,7 @@ export default function AdminLayout({
               </nav>
 
               {/* Sidebar Footer */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-700 bg-gray-800">
+              <div className="absolute bottom-0 left-0 right-0 p-4 border-t" style={{ borderTopColor: `${theme.colors.primary}30`, backgroundColor: `${theme.colors.background}dd` }}>
                 <div className="flex items-center space-x-3 text-xs text-gray-500">
                   <Settings className="h-4 w-4" />
                   <span>v1.0.0</span>

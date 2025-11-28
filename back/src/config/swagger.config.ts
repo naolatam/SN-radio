@@ -22,10 +22,6 @@ const options: swaggerJsdoc.Options = {
         url: config.BETTER_AUTH_URL || 'http://localhost:5000',
         description: 'Development server',
       },
-      {
-        url: 'https://api.snradio.com',
-        description: 'Production server',
-      },
     ],
     components: {
       securitySchemes: {
@@ -217,10 +213,6 @@ const options: swaggerJsdoc.Options = {
       {
         name: 'Categories',
         description: 'Category management endpoints',
-      },
-      {
-        name: 'Site Config',
-        description: 'Site configuration endpoints',
       },
     ],
   },

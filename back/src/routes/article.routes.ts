@@ -37,6 +37,37 @@ router.get('/', optionalAuthMiddleware, articleController.getAllArticles.bind(ar
 
 /**
  * @swagger
+ * /api/articles/liked:
+ *   get:
+ *     summary: Get liked articles
+ *     description: Retrieve all articles that the authenticated user has liked
+ *     tags: [Articles]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of liked articles retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Article'
+ *       401:
+ *         description: Authentication required
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/liked', authMiddleware, articleController.getLikedArticles.bind(articleController));
+
+/**
+ * @swagger
  * /api/articles/{articleId}:
  *   get:
  *     summary: Get article by ID

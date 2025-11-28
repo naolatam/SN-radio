@@ -57,7 +57,6 @@ export const authMiddleware: Middleware = async (
 
     // Attach user to request
     req.user = authHelper.authenticateUser(session as BetterAuthSession);
-    console.log('Authenticated user:', req.user);
     const fullUser = await userService.getUserById(req.user.id);
     if(!fullUser) {
       next();

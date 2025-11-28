@@ -101,6 +101,39 @@ export class UserController {
     }
   }
 
+  async getUsersByName(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      if (!req.user || req.user.role !== UserRole.ADMIN) {
+        res.status(403).json({
+          success: false,
+          error: 'Admin access required',
+        } as ApiResponse);
+        return;
+      }
+      
+      const { name } = req.query; 
+      if (typeof name !== 'string' || !name.trim()) {
+        res.status(400).json({
+          success: false,
+          error: 'Invalid name parameter',
+        } as ApiResponse);
+        return;
+      }
+
+      const users = await userService.getUsersByName(name);
+      res.json({
+        success: true,
+        data: { users },
+      } as ApiResponse);
+    } catch (error) {
+      console.error('Error in getUserByName:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Internal server error',
+      } as ApiResponse);
+    }
+  }
+
   async updateUserRole(req: AuthRequest, res: Response): Promise<void> {
     try {
       if (!req.user || req.user.role !== UserRole.ADMIN) {

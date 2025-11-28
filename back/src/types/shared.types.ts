@@ -164,72 +164,101 @@ export interface UpdateArticleDTO {
 }
 
 // ============================================
-// Site Configuration
+// Theme Management (New Multi-Theme System)
 // ============================================
 
-export enum ConfigType {
-  TEXT = 'TEXT',
-  URL = 'URL',
-  EMAIL = 'EMAIL',
-  PHONE = 'PHONE',
-  HTML = 'HTML',
-  JSON = 'JSON',
-}
-
-export interface ConfigValue {
+export interface Theme {
   id: string;
-  key: string;
-  value: string;
-  valueType: ConfigType;
-  displayOrder: number;
-}
-
-export interface SiteConfig {
-  id: string;
-  key: string;
   name: string;
+  slug: string;
   description?: string;
+  primaryColor: string;
+  secondaryColor: string;
+  backgroundColor: string;
+  favicon?: string;
+  icon?: string;
+  logo?: string;
+  siteName: string;
   isActive: boolean;
-  values: ConfigValue[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface CreateThemeDTO {
+  name: string;
+  slug: string;
+  description?: string;
+  primaryColor: string;
+  secondaryColor: string;
+  backgroundColor: string;
+  favicon?: string;
+  icon?: string;
+  logo?: string;
+  siteName: string;
+}
+
+export interface UpdateThemeDTO {
+  name?: string;
+  slug?: string;
+  description?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  backgroundColor?: string;
+  favicon?: string;
+  icon?: string;
+  logo?: string;
+  siteName?: string;
+}
+
+export interface ThemeConfigDTO {
+  primaryColor: string;
+  secondaryColor: string;
+  backgroundColor: string;
+  favicon: string;
+  icon: string;
+  logo: string;
+  siteName: string;
+}
+
+// ============================================
+// Staff Management
+// ============================================
+
+export interface Staff {
+  id: string;
+  description?: string | null;
+  role: string;
+  userId: string;
+  user?: User;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface StaffPresenterDTO {
+  id: string;
+  description?: string;
+  role: string;
+  user: {
+    id: string;
+    name: string;
+    email?: string;
+    image?: string;
+    role: UserRole;
+  };
   createdAt: string;
   updatedAt: string;
 }
 
-export interface CreateConfigDTO {
-  key: string;
-  name: string;
+export interface CreateStaffDTO {
+  userId: string;
+  role: string;
   description?: string;
-  values: Array<{
-    key: string;
-    value: string;
-    valueType: ConfigType;
-    displayOrder?: number;
-  }>;
 }
 
-export interface UpdateConfigDTO {
-  name?: string;
+export interface UpdateStaffDTO {
+  role?: string;
   description?: string;
-  isActive?: boolean;
-  values?: Array<{
-    id?: string;
-    key: string;
-    value: string;
-    valueType: ConfigType;
-    displayOrder?: number;
-  }>;
 }
-
-// Predefined config keys
-export const CONFIG_KEYS = {
-  FOOTER: 'footer',
-  CONTACT: 'contact',
-  QUICK_LINKS: 'quick_links',
-  LEGAL_TERMS: 'legal_terms',
-  PRIVACY_POLICY: 'privacy_policy',
-  TERMS_OF_USE: 'terms_of_use',
-  SOCIAL_MEDIA: 'social_media',
-} as const;
 
 // ============================================
 // API Response Wrappers

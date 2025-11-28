@@ -6,8 +6,10 @@ import { Music, ChevronDown, ChevronUp } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Button } from './ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
+import { useThemeManager } from './ThemeManagerContext';
 
 export default function NowPlaying() {
+  const { theme } = useThemeManager();
   const [nowPlaying, setNowPlaying] = useState<{
     title: string;
     artist: string;
@@ -68,10 +70,10 @@ export default function NowPlaying() {
     return (
       <div
         className="backdrop-blur-sm rounded-xl p-4 md:p-6 border"
-        style={{ backgroundColor: '#12171C50', borderColor: '#ffffff20' }}
+        style={{ backgroundColor: `${theme.colors.background}80`, borderColor: `${theme.colors.primary}40` }}
       >
         <h3 className="text-white font-semibold mb-4 flex items-center space-x-2 text-lg md:text-xl">
-          <Music className="h-5 w-5" style={{ color: '#007EFF' }} />
+          <Music className="h-5 w-5" style={{ color: theme.colors.primary }} />
           <span>En direct maintenant</span>
         </h3>
         <p className="text-gray-400">Chargement en cours...</p>
@@ -83,7 +85,7 @@ export default function NowPlaying() {
     return (
       <div
         className="backdrop-blur-sm rounded-xl p-4 md:p-6 border"
-        style={{ backgroundColor: '#12171C50', borderColor: '#ffffff20' }}
+        style={{ backgroundColor: `${theme.colors.background}80`, borderColor: `${theme.colors.primary}40` }}
       >
         <h3 className="text-white font-semibold mb-4 flex items-center space-x-2 text-lg md:text-xl">
           <Music className="h-5 w-5" style={{ color: '#FF4B4B' }} />
@@ -97,10 +99,10 @@ export default function NowPlaying() {
   return (
     <div
       className="backdrop-blur-sm rounded-xl p-4 md:p-6 border"
-      style={{ backgroundColor: '#12171C50', borderColor: '#ffffff20' }}
+      style={{ backgroundColor: `${theme.colors.background}80`, borderColor: `${theme.colors.primary}40` }}
     >
       <h3 className="text-white font-semibold mb-4 flex items-center space-x-2 text-lg md:text-xl">
-        <Music className="h-5 w-5" style={{ color: '#007EFF' }} />
+        <Music className="h-5 w-5" style={{ color: theme.colors.primary }} />
         <span>En direct maintenant</span>
       </h3>
 

@@ -10,7 +10,7 @@ import { Card, CardContent } from './ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Input } from './ui/input';
 import { useAuth } from './AuthContext';
-import { useTheme } from './ThemeContext';
+import { useThemeManager } from './ThemeManagerContext';
 import { useNavigation } from '@/hooks/useNavigation';
 import { toast } from 'sonner';
 import { UserRole, UserProfile as UserProfileType } from '@/types/shared.types';
@@ -25,7 +25,7 @@ interface UserProfileProps {
 
 export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticles }: UserProfileProps) {
   const { user, logout, refreshProfile } = useAuth();
-  const { themeColors } = useTheme();
+  const { theme } = useThemeManager();
   const { goToAdmin } = useNavigation();
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(user?.name || '');
@@ -106,15 +106,15 @@ export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticle
         <Card 
           className="overflow-hidden"
           style={{ 
-            backgroundColor: themeColors.background,
-            borderColor: themeColors.border 
+            backgroundColor: theme.colors.background,
+            borderColor: theme.colors.border 
           }}
         >
           {/* Gradient Header with Avatar */}
           <div 
             className="relative flex flex-col items-center justify-center "
             style={{
-              background: 'linear-gradient(135deg, #FF9A3C 35%, #007EFF 100%)'
+              background: `linear-gradient(135deg, ${theme.colors.primary} 0%, ${theme.colors.secondary} 100%)`
             }}
           >
             {/* Edit / Save Buttons / Close */}
@@ -240,7 +240,7 @@ export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticle
                 }}
                 className="flex flex-col items-center cursor-pointer w-full p-2 rounded-lg border"
                               style={{
-                background: `${themeColors.button.ghost}`,
+                background: `${theme.colors.button.ghost}`,
               }}
               >
                 <Heart
@@ -248,10 +248,10 @@ export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticle
                   style={{ color: '#FF6B9D' }}
                   fill="#FF6B9D"
                 />
-                <p className="text-xl font-bold mb-0.5" style={{ color: themeColors.text.primary }}>
+                <p className="text-xl font-bold mb-0.5" style={{ color: theme.colors.text.primary }}>
                   {userProfile?.likesCount ?? 0}
                 </p>
-                <p className="text-xs" style={{ color: themeColors.text.secondary }}>
+                <p className="text-xs" style={{ color: theme.colors.text.secondary }}>
                   Article aimé
                 </p>
               </motion.div>
@@ -259,7 +259,7 @@ export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticle
               {/* Divider */}
               <div 
                 className="h-12 w-px"
-                style={{ backgroundColor: themeColors.border }}
+                style={{ backgroundColor: theme.colors.border }}
               />
 
               {/* Jours */}
@@ -268,17 +268,17 @@ export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticle
                 whileTap={{ scale: 0.95 }}
               className="flex flex-col items-center cursor-pointer w-full p-2 rounded-lg border"
                   style={{
-                    background: `${themeColors.button.ghost}`,
+                    background: `${theme.colors.button.ghost}`,
                     }}
                 >
                 <Calendar
                   className="h-6 w-6 mb-1"
                   style={{ color: '#FFB84D' }}
                 />
-                <p className="text-xl font-bold mb-0.5" style={{ color: themeColors.text.primary }}>
+                <p className="text-xl font-bold mb-0.5" style={{ color: theme.colors.text.primary }}>
                   {user.createdAt ? Math.floor((new Date().getTime() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60 * 24)) : 0}
                 </p>
-                <p className="text-xs" style={{ color: themeColors.text.secondary }}>
+                <p className="text-xs" style={{ color: theme.colors.text.secondary }}>
                   Jours
                 </p>
               </motion.div>
@@ -290,14 +290,14 @@ export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticle
             {user.createdAt && (
               <div 
                 className="flex items-center gap-2 p-3 rounded-lg"
-                style={{ background: `${themeColors.button.ghost}` }}
+                style={{ background: `${theme.colors.button.ghost}` }}
               >
-                <Calendar className="h-4 w-4" style={{ color: themeColors.text.secondary }} />
+                <Calendar className="h-4 w-4" style={{ color: theme.colors.text.secondary }} />
                 <div>
-                  <p className="text-xs" style={{ color: themeColors.text.secondary }}>
+                  <p className="text-xs" style={{ color: theme.colors.text.secondary }}>
                     Membre depuis
                   </p>
-                  <p className="text-sm font-medium" style={{ color: themeColors.text.primary }}>
+                  <p className="text-sm font-medium" style={{ color: theme.colors.text.primary }}>
                     {new Date(user.createdAt).toLocaleDateString('fr-FR', {
                       day: 'numeric',
                       month: 'long',
@@ -314,9 +314,9 @@ export default function UserProfile({ onClose, onAdminAccess, onViewLikedArticle
                 onClick={handleAdminAccess}
                 className="w-full font-semibold"
                 style={{ 
-                  backgroundColor: `${themeColors.secondary}20`,
-                  color: themeColors.secondary,
-                  borderColor: themeColors.secondary,
+                  backgroundColor: `${theme.colors.secondary}20`,
+                  color: theme.colors.secondary,
+                  borderColor: theme.colors.secondary,
                   borderWidth: '1px'
                 }}
               >

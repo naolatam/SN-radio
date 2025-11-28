@@ -110,6 +110,10 @@ export class ArticleService implements IArticleService {
   async getArticleCount(): Promise<number> {
     return articleRepository.count();
   }
+
+  async getLikedArticles(userId: string, currentUserId?: string): Promise<Article[]> {
+    return articleRepository.findLikedByUser(userId, currentUserId);
+  }
 }
 
 export const articleService = new ArticleService();

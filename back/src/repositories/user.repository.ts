@@ -27,10 +27,26 @@ export class UserRepository implements IUserRepository {
       where: { email },
     });
   }
-
+  async findsByPseudo(pseudo: string): Promise<Prisma.UserGetPayload<{}>[] | null> {
+    return await prisma.user.findMany({
+      where: { name: { contains: pseudo }, role: UserRole.MEMBER }, // Map pseudo to name field
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        emailVerified: true,
+        image: true,
+        description: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+        lastLogin: true,
+      },
+    });
+  }
   async findByPseudo(pseudo: string): Promise<Prisma.UserGetPayload<{}> | null> {
     return prisma.user.findFirst({
-      where: { name: pseudo }, // Map pseudo to name field
+      where: { name: { contains: pseudo,  } }, // Map pseudo to name field
     });
   }
 

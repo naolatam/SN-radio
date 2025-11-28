@@ -131,6 +131,7 @@ router.put('/profile', authMiddleware, userController.updateProfile.bind(userCon
  *               $ref: '#/components/schemas/Error'
  */
 router.get('/', authMiddleware, adminMiddleware, userController.getAllUsers.bind(userController));
+router.get('/byName', authMiddleware, adminMiddleware, userController.getUsersByName.bind(userController));
 
 /**
  * @swagger

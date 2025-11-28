@@ -4,8 +4,10 @@ import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { Button } from './ui/button';
 import { Slider } from './ui/slider';
 import { useAudio } from './AudioContext';
+import { useThemeManager } from './ThemeManagerContext';
 
 export default function AudioPlayer() {
+  const { theme } = useThemeManager();
   const { isPlaying, isMuted, volume, togglePlay, toggleMute, setVolume, isOnline } = useAudio();
 
   const handleVolumeChange = (value: number[]) => {
@@ -13,7 +15,7 @@ export default function AudioPlayer() {
   };
 
   return (
-    <div className="backdrop-blur-sm rounded-2xl p-4 md:p-6 border" style={{backgroundColor: '#12171C80', borderColor: '#ffffff20'}}>
+    <div className="backdrop-blur-sm rounded-2xl p-4 md:p-6 border" style={{backgroundColor: `${theme.colors.background}cc`, borderColor: `${theme.colors.primary}40`}}>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 mb-4">
         <div className="flex items-center space-x-3 md:space-x-4">
@@ -21,7 +23,7 @@ export default function AudioPlayer() {
             onClick={togglePlay}
             size="lg"
             className="w-14 h-14 md:w-16 md:h-16 rounded-full text-white hover:opacity-90 transition-opacity"
-            style={{background: 'linear-gradient(135deg, #007EFF, #FFBB62)'}}
+            style={{background: `linear-gradient(135deg, ${theme.colors.primary}, ${theme.colors.secondary})`}}
           >
             {isPlaying ? (
               <Pause className="h-6 w-6 md:h-8 md:w-8" />
