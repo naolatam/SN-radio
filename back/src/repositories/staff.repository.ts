@@ -7,14 +7,14 @@ import {
 } from '../types/repository.types';
 
 export class StaffRepository implements IStaffRepository {
-  async findAll(): Promise<StaffWithUser[]> {
+  async findAll({ withEmail }: { withEmail: boolean }): Promise<StaffWithUser[]> {
     return prisma.staff.findMany({
       include: {
         user: {
           select: {
             id: true,
             name: true,
-            email: true,
+            email: withEmail,
             image: true,
             role: true,
           },

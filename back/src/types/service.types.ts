@@ -75,7 +75,7 @@ export interface ICategoryService {
 
 // Staff Service Types
 export interface IStaffService {
-  getAllStaff(): Promise<import('./shared.types').StaffPresenterDTO[]>;
+  getAllStaff(isStaff: boolean): Promise<import('./shared.types').StaffPresenterDTO[]>;
   getStaffById(staffId: string): Promise<import('./shared.types').StaffPresenterDTO | null>;
   getStaffByUserId(userId: string): Promise<import('./shared.types').StaffPresenterDTO | null>;
   createStaff(data: import('./shared.types').CreateStaffDTO): Promise<import('./shared.types').StaffPresenterDTO>;

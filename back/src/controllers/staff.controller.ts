@@ -10,7 +10,8 @@ export class StaffController {
    */
   async getAllStaff(req: AuthRequest, res: Response): Promise<void> {
     try {
-      const staff = await staffService.getAllStaff();
+      const isStaff = req.user?.role === UserRole.STAFF;
+      const staff = await staffService.getAllStaff(isStaff);
       res.json({
         success: true,
         data: { staff },

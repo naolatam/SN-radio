@@ -130,7 +130,7 @@ export interface UpdateStaffData {
 }
 
 export interface IStaffRepository {
-  findAll(): Promise<StaffWithUser[]>;
+  findAll({ withEmail }: { withEmail: boolean }): Promise<StaffWithUser[]>;
   findById(id: string): Promise<StaffWithUser | null>;
   findByUserId(userId: string): Promise<StaffWithUser | null>;
   create(data: CreateStaffData): Promise<StaffWithUser>;

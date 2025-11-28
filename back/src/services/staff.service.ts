@@ -5,8 +5,8 @@ import { StaffWithUser } from '../types/repository.types';
 import { userService } from './user.service';
 
 export class StaffService implements IStaffService {
-  async getAllStaff(): Promise<StaffPresenterDTO[]> {
-    const staffMembers = await staffRepository.findAll();
+  async getAllStaff(isStaff: boolean): Promise<StaffPresenterDTO[]> {
+    const staffMembers = await staffRepository.findAll({ withEmail: isStaff });
     return staffMembers.map(staff => this.formatStaffPresenter(staff));
   }
 
